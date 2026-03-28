@@ -1,0 +1,19 @@
+{
+  "React Native Functional Export (PascalCase)": {
+    "prefix": "rnfe",
+    "body": [
+      "import { Text, View } from 'react-native'",
+      "\n",
+      "const ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}} = () => {",
+      "\treturn (",
+      "\t\t<View>",
+      "\t\t\t<Text>${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}}</Text>",
+      "\t\t</View>",
+      "\t)",
+      "}",
+      "",
+      "export default ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}}",
+    ],
+    "description": "React Native functional export with PascalCase component name",
+  },
+}
