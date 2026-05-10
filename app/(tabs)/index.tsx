@@ -20,7 +20,7 @@ const SafeAreaView = styled(RNSafeAreaView);
 
 export default function App() {
   const [expandedSubscriptionId, setExpandedSubscriptionId] =
-    useState<String | null>(null);
+    useState<string | null>(null);
 
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
