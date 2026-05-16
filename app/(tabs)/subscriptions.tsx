@@ -17,7 +17,7 @@ const Subscriptions = () => {
   const filteredSubscriptions = subscriptions.filter(
     (sub) =>
       sub.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      sub.category?.toLowerCase().includes(searchQuery.toLowerCase()),
+      (sub.category || "").toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (

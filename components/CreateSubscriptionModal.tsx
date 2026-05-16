@@ -52,7 +52,10 @@ const CreateSubscriptionModal = ({
   const [frequency, setFrequency] = useState<"Monthly" | "Yearly">("Monthly");
   const [category, setCategory] = useState("Entertainment");
 
-  const isValid = name.trim().length > 0 && parseFloat(price) > 0;
+  const isValid =
+    name.trim().length > 0 &&
+    /^\d+(\.\d{1,2})?$/.test(price.trim()) &&
+    Number(price) > 0;
 
   const handleClose = () => {
     setName("");
