@@ -1,3 +1,4 @@
+import { colors } from "@/constants/theme";
 import { useAuth } from "@clerk/expo";
 import { Redirect, Stack } from "expo-router";
 
@@ -10,5 +11,12 @@ export default function AuthLayout() {
     return <Redirect href="/(tabs)" />;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: colors.background },
+      }}
+    />
+  );
 }

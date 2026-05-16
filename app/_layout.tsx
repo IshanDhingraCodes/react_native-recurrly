@@ -1,3 +1,4 @@
+import { colors } from "@/constants/theme";
 import { SubscriptionProvider } from "@/context/SubscriptionContext";
 import "@/global.css";
 import { ClerkLoaded, ClerkProvider } from "@clerk/expo";
@@ -38,7 +39,12 @@ export default function RootLayout() {
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
         <SubscriptionProvider>
-          <Stack screenOptions={{ headerShown: false }}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: colors.background },
+            }}
+          >
             <Stack.Screen name="(auth)" />
             <Stack.Screen name="(tabs)" />
           </Stack>

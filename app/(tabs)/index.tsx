@@ -13,6 +13,7 @@ import { useSubscriptions } from "@/context/SubscriptionContext";
 import { formatCurrency } from "@/lib/utils";
 import { useUser } from "@clerk/expo";
 import dayjs from "dayjs";
+import { useRouter } from "expo-router";
 import { styled } from "nativewind";
 import { useState } from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
@@ -22,6 +23,7 @@ const SafeAreaView = styled(RNSafeAreaView);
 
 export default function App() {
   const { user } = useUser();
+  const router = useRouter();
   const { subscriptions, addSubscription } = useSubscriptions();
   const [expandedSubscriptionId, setExpandedSubscriptionId] = useState<
     string | null
@@ -66,10 +68,15 @@ export default function App() {
             </View>
 
             <View className="mb-5">
-              <ListHeading title="Upcoming" />
+              <ListHeading
+                title="Upcoming"
+                onPress={() => router.push("/subscriptions")}
+              />
               <FlatList
                 data={UPCOMING_SUBSCRIPTIONS}
-                renderItem={({ item }) => <UpcomingSubscriptionCard {...item} />}
+                renderItem={({ item }) => (
+                  <UpcomingSubscriptionCard {...item} />
+                )}
                 keyExtractor={(item) => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -80,7 +87,10 @@ export default function App() {
                 }
               />
             </View>
-            <ListHeading title="All Subscription" />
+            <ListHeading
+              title="All Subscription"
+              onPress={() => router.push("/subscriptions")}
+            />
           </>
         )}
         data={subscriptions}
