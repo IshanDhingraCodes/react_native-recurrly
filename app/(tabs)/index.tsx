@@ -1,29 +1,32 @@
+import CreateSubscriptionModal from "@/components/CreateSubscriptionModal";
 import ListHeading from "@/components/ListHeading";
 import SubscriptionCard from "@/components/SubscriptionCard";
 import UpcomingSubscriptionCard from "@/components/UpcomingSubscriptionCard";
 import {
   HOME_BALANCE,
-  HOME_SUBSCRIPTIONS,
   HOME_USER,
   UPCOMING_SUBSCRIPTIONS,
 } from "@/constants/data";
 import { icons } from "@/constants/icons";
 import images from "@/constants/images";
+import { useSubscriptions } from "@/context/SubscriptionContext";
 import { formatCurrency } from "@/lib/utils";
 import { useUser } from "@clerk/expo";
 import dayjs from "dayjs";
 import { styled } from "nativewind";
 import { useState } from "react";
-import { FlatList, Image, Text, View } from "react-native";
+import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
 export default function App() {
   const { user } = useUser();
+  const { subscriptions, addSubscription } = useSubscriptions();
   const [expandedSubscriptionId, setExpandedSubscriptionId] = useState<
     string | null
   >(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const displayName =
     user?.firstName ??
@@ -42,9 +45,12 @@ export default function App() {
                 <Image source={avatarSource} className="home-avatar" />
                 <Text className="home-user-name">{displayName}</Text>
               </View>
-              <View className="home-add-button">
+              <Pressable
+                onPress={() => setModalVisible(true)}
+                className="home-add-button"
+              >
                 <Image source={icons.add} className="home-add-icon" />
-              </View>
+              </Pressable>
             </View>
 
             <View className="home-balance-card">
@@ -63,9 +69,7 @@ export default function App() {
               <ListHeading title="Upcoming" />
               <FlatList
                 data={UPCOMING_SUBSCRIPTIONS}
-                renderItem={({ item }) => (
-                  <UpcomingSubscriptionCard {...item} />
-                )}
+                renderItem={({ item }) => <UpcomingSubscriptionCard {...item} />}
                 keyExtractor={(item) => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -79,7 +83,7 @@ export default function App() {
             <ListHeading title="All Subscription" />
           </>
         )}
-        data={HOME_SUBSCRIPTIONS}
+        data={subscriptions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <SubscriptionCard
@@ -99,6 +103,12 @@ export default function App() {
           <Text className="home-empty-state">No subscriptions yet.</Text>
         }
         contentContainerClassName="pb-20"
+      />
+
+      <CreateSubscriptionModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={addSubscription}
       />
     </SafeAreaView>
   );
