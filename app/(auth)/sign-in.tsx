@@ -48,7 +48,7 @@ export default function SignIn() {
 
   const handleSignIn = async () => {
     const { error } = await signIn.password({
-      emailAddress: email,
+      emailAddress: email.trim(),
       password,
     });
 

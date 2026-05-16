@@ -49,7 +49,7 @@ export default function SignUp() {
 
   const handleSignUp = async () => {
     const { error } = await signUp.password({
-      emailAddress: email,
+      emailAddress: email.trim(),
       password,
     });
 
